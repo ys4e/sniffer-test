@@ -1094,7 +1094,7 @@ dependencies = [
 
 [[package]]
 name = "ys-sniffer"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "base64",
@@ -1106,7 +1106,6 @@ dependencies = [
  "protoshark",
  "rsa",
  "serde",
- "tokio",
  "ys-kcp",
 ]
 

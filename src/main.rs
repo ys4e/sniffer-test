@@ -78,7 +78,7 @@ async fn main() -> Result<()> {
     let (tx, rx) = crossbeam_channel::unbounded();
 
     // Start the packet sniffer.
-    let Ok(shutdown_hook) = ys_sniffer::sniff(options, tx).await else {
+    let Ok(shutdown_hook) = ys_sniffer::sniff(options, tx) else {
         return Err(anyhow!("failed to start the sniffer"));
     };
 
