@@ -1,0 +1,23 @@
+[package]
+name = "sniffer-test"
+version = "1.0.0"
+authors = ["KingRainbow44"]
+description = "Demo application of 'ys-sniffer' library"
+license = "MIT"
+readme = "README.md"
+edition = "2021"
+
+[dependencies]
+
+log = "0.4"
+pretty_env_logger = "0.5"
+dialoguer = "0.11"
+anyhow = "1"
+base64 = "0.22"
+
+tokio = { version = "1", features = ["full"] }
+tokio-macros = "2.5.0"
+
+pcap = "2"
+crossbeam-channel = "0.5"
+ys-sniffer = { path = "../ys-sniffer" }
