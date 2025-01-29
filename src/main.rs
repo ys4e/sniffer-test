@@ -4,7 +4,7 @@ use std::io::Write;
 use dialoguer::Select;
 use dialoguer::theme::ColorfulTheme;
 use pcap::Device;
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use base64::Engine;
 use base64::prelude::BASE64_STANDARD;
 use log::info;
@@ -78,9 +78,9 @@ async fn main() -> Result<()> {
     let (tx, rx) = crossbeam_channel::unbounded();
 
     // Start the packet sniffer.
-    tokio::spawn(async move {
-        let _ = ys_sniffer::sniff(options, tx).await;
-    });
+    let Ok(shutdown_hook) = ys_sniffer::sniff(options, tx).await else {
+        return Err(anyhow!("failed to start the sniffer"));
+    };
 
     // Write all packets to the disk.
     tokio::spawn(async move {
@@ -104,6 +104,10 @@ async fn main() -> Result<()> {
 
     // Wait for a Ctrl + C signal.
     tokio::signal::ctrl_c().await?;
+    
+    info!("shutting down...");
+
+    shutdown_hook.send(())?;
 
     Ok(())
 }
